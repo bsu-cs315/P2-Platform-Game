@@ -1,12 +1,15 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/scenes/Platform.tscn" type="PackedScene" id=2]
 
 [node name="Main" type="Node2D"]
 
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_left = 383.0
-margin_top = 193.0
-margin_right = 517.0
-margin_bottom = 305.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 262.792, 159.059 )
+
+[node name="Platform" parent="." instance=ExtResource( 2 )]
+position = Vector2( 266, 273 )
+
+[node name="Platform2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 383, 453 )
