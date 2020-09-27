@@ -1,24 +1,27 @@
 extends KinematicBody2D
 
+
 export var gravity: float = 9.8
+export var drag: float = 0.95
 export var movement_speed: float = 250.0
+export var movement_speed_max: float = 500.0
 export var jump_force: float = 10.0
 
 var airborne: bool = false
+var velocity_horizontal: float = 0.0
 var velocity_vertical: float = 0.0
 var movement_dir: Vector2 = Vector2(0.0, 0.0)
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
+func _process(_delta: float) -> void:
+	set_animation()
+	
+	
 func _physics_process(delta: float) -> void:
 	check_airborne()
 	get_input()
-	apply_gravity(delta)
-	move_and_slide(movement_dir * movement_speed, Vector2(0, -1))
+	calculate_velocity(delta)
+	var _velocity: Vector2 = move_and_slide(movement_dir * movement_speed, Vector2(0, -1))
 
 
 func get_input() -> void:
@@ -31,6 +34,17 @@ func get_input() -> void:
 		if !airborne:
 			airborne = true
 			velocity_vertical = -jump_force
+			
+
+func set_animation() -> void:
+	$PlayerSprite.play()
+	if airborne:
+		$PlayerSprite.animation = "air"
+	else:
+		$PlayerSprite.animation = "walk"
+	if movement_dir.x == 0.0 && $PlayerSprite.animation == "walk":
+		$PlayerSprite.frame = 0
+		$PlayerSprite.stop()
 		
 		
 func check_airborne() -> void:
@@ -39,8 +53,16 @@ func check_airborne() -> void:
 		velocity_vertical = 0.0
 	else:
 		airborne = true
+	if is_on_wall():
+		velocity_horizontal = 0.0
 		
-func apply_gravity(delta: float) -> void:
-	if(airborne):
-		velocity_vertical += gravity * delta
-		movement_dir.y += velocity_vertical * delta
+		
+func calculate_velocity(delta: float) -> void:
+	velocity_horizontal += movement_dir.x * movement_speed * delta
+	movement_dir.x = clamp(velocity_horizontal * delta, -movement_speed_max, movement_speed_max)
+	if velocity_horizontal > 0:
+		velocity_horizontal = floor(velocity_horizontal * drag)
+	if velocity_horizontal < 0:
+		velocity_horizontal = ceil(velocity_horizontal * drag)
+	velocity_vertical += gravity * delta
+	movement_dir.y += velocity_vertical * delta
