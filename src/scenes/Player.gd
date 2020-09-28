@@ -6,22 +6,24 @@ export var drag: float = 0.95
 export var movement_speed: float = 250.0
 export var movement_speed_max: float = 500.0
 export var jump_force: float = 10.0
+export var reset_height: float = 300.0
 
 var airborne: bool = false
 var velocity_horizontal: float = 0.0
 var velocity_vertical: float = 0.0
 var movement_dir: Vector2 = Vector2(0.0, 0.0)
 
+onready var start_pos: Vector2 = position
 
-func _process(_delta: float) -> void:
-	set_animation()
-	
-	
+
 func _physics_process(delta: float) -> void:
 	check_airborne()
 	get_input()
 	calculate_velocity(delta)
 	var _velocity: Vector2 = move_and_slide(movement_dir * movement_speed, Vector2(0, -1))
+	if position.y > reset_height:
+		reset_position()
+	set_animation()
 
 
 func get_input() -> void:
@@ -66,3 +68,9 @@ func calculate_velocity(delta: float) -> void:
 		velocity_horizontal = ceil(velocity_horizontal * drag)
 	velocity_vertical += gravity * delta
 	movement_dir.y += velocity_vertical * delta
+	
+	
+func reset_position() -> void:
+	velocity_horizontal = 0
+	velocity_vertical = 0
+	position = start_pos
