@@ -16,3 +16,30 @@ text = "Coins: 0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="VictoryScreen" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 2, 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VictoryScreen"]
+margin_left = 222.763
+margin_top = 123.101
+margin_right = 286.763
+margin_bottom = 137.101
+text = "YOU WIN!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButton" type="Button" parent="VictoryScreen"]
+margin_left = 179.049
+margin_top = 153.622
+margin_right = 331.049
+margin_bottom = 173.622
+text = "CLICK TO PLAY AGAIN"
+[connection signal="button_down" from="VictoryScreen/MenuButton" to="." method="_on_MenuButton_button_down"]

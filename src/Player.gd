@@ -147,7 +147,7 @@ func reset_position() -> void:
 	position = start_pos
 
 
-func _on_PlayerArea_area_entered(area):
+func _on_PlayerArea_area_entered(area: Area2D) -> void:
 	if "Coin" in area.name:
 		Score.score += 1
 		play_coin_sound()
