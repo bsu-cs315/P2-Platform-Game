@@ -9,6 +9,10 @@ export var jump_force: float = 10.0
 export var reset_height: float = 300.0
 
 var airborne: bool = false
+var landed: bool = false
+var landing: bool = false
+var landing_juice_t: float = 0.0
+var jumping_juice_t: float = 0.0
 var velocity_horizontal: float = 0.0
 var velocity_vertical: float = 0.0
 var movement_dir: Vector2 = Vector2(0.0, 0.0)
@@ -19,6 +23,20 @@ var coin_sound: AudioStreamSample = load("res://assets/money.wav")
 onready var start_pos: Vector2 = position
 
 
+func _process(delta):
+	if landing:
+		play_landing_juice(landing_juice_t)
+		landing_juice_t += delta * 5
+		if landing_juice_t >= 1:
+			landing = false
+			$PlayerSprite.scale.y = 1
+	if airborne:
+		play_jumping_juice(jumping_juice_t)
+		jumping_juice_t += delta * 5
+		if jumping_juice_t >= 1:
+			$PlayerSprite.scale.y = 1
+	
+
 func _physics_process(delta: float) -> void:
 	check_airborne()
 	get_input()
@@ -28,7 +46,33 @@ func _physics_process(delta: float) -> void:
 		reset_position()
 		play_death_sound()
 	set_animation()
+		
+		
+func play_landing_juice(t: float) -> void:
+	$PlayerSprite.scale.y = 1 - (spike(t) * 0.25)
+	
+	
+func play_jumping_juice(t: float) -> void:
+	$PlayerSprite.scale.y = 1 + (spike(t) * 0.5)
+	
 
+func ease_in(t: float) -> float:
+	return t * t
+	
+
+func flip(t: float) -> float:
+	return 1 - t
+	
+
+func ease_out(t: float) -> float:
+	return flip(flip(t) * flip(t))
+	
+	
+func spike(t: float) -> float:
+	if t <= 0.5:
+		return ease_in(t / 0.5)
+	return ease_out(t / 0.5)
+	
 
 func get_input() -> void:
 	movement_dir = Vector2(0.0, 0.0)
@@ -39,22 +83,23 @@ func get_input() -> void:
 	if Input.is_action_pressed("ui_up"):
 		if !airborne:
 			airborne = true
+			jumping_juice_t = 0.0
 			velocity_vertical = -jump_force
 			play_jump_sound()
 	
 			
-func play_jump_sound():
+func play_jump_sound() -> void:
 	var random_int: int = randi() % 3
 	$PlayerAudio.stream = jump_sounds[random_int]
 	$PlayerAudio.play()
 	
 	
-func play_death_sound():
+func play_death_sound() -> void:
 	$PlayerAudio.stream = death_sound
 	$PlayerAudio.play()
 	
 
-func play_coin_sound():
+func play_coin_sound() -> void:
 	$PlayerAudio.stream = coin_sound
 	$PlayerAudio.play()
 			
@@ -72,9 +117,14 @@ func set_animation() -> void:
 		
 func check_airborne() -> void:
 	if is_on_floor():
+		if !landed:
+			landed = true
+			landing = true
+			landing_juice_t = 0.0
 		airborne = false
 		velocity_vertical = 0.0
 	else:
+		landed = false
 		airborne = true
 	if is_on_wall():
 		velocity_horizontal = 0.0

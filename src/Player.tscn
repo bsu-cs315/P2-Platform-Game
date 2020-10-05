@@ -43,11 +43,9 @@ frames = SubResource( 1 )
 animation = "walk"
 
 [node name="PlayerArea" type="Area2D" parent="."]
-scale = Vector2( 1, 1 )
 
 [node name="PlayerCollider2" type="CollisionShape2D" parent="PlayerArea"]
 position = Vector2( 0, 1.5 )
-scale = Vector2( 1, 1 )
 shape = SubResource( 2 )
 
 [node name="PlayerCollider" type="CollisionShape2D" parent="."]

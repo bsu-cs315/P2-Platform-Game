@@ -1,9 +1,10 @@
 extends CanvasLayer
 
 
-var coins: int = 0
+func _process(_delta) -> void:
+	render()
+	
 
-
-func _process(_delta):
+func render() -> void:
 	$CoinLabel.text = "Coins: " + String(Score.score)
 	
