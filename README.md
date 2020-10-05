@@ -12,11 +12,17 @@ All assets were created by me.
 
 ## Project Report
 
-### Iteration 1 Reflection
-I enjoyed this iteration because I have never made a platformer before. It's pretty simple to make a basic platformer, but getting the movement to feel good can be difficult. I enjoyed making my simple player asset, featuring hyper realistic animations. Making the tilemap made it very easy to make a basic level, and in the future could allow me to create more complex levels. Overall, this iteration was a good time.
+
+### Juice Report
+Juice example 1: Player sprite briefly grows taller when jumping, using ideas from "Fast and Funky 1D Transformations".
+Juice example 2: Player sprite briefly gets shorter when landing on the ground, using ideas from "Fast and Funky 1D Transformations".
 
 
-### Iteration 1 Self-Evaluation
+### Iteration 2 Reflection
+This iteration was more intensive than I originally thought it would be, although it was fun overall. Learning about how to add juice to your games should be valuable to me in the future. Learning how to smoothly animate using easing functions should allow me to make juicier looking applications as well, not just games. Making the sounds for the game was fun, the sound effects definitely added some juice to the game as well. Overall I enjoyed this iteration and look forward to the next project.
+
+
+### Iteration 2 Self-Evaluation
 
 - [X] D-1: The repository link is submitted to Canvas before the project deadline.
 - [X] D-2: The repository contains a <code>README.md</code> file in its top-level directory.
@@ -30,12 +36,17 @@ I enjoyed this iteration because I have never made a platformer before. It's pre
 - [X] C-7: The player's character can move left and right, with its movement bounded by impassable tiles.
 - [X] C-8: The player's character can jump up and onto tiles.
 - [X] C-9: The player's character falls down when walking off a ledge.
+- [X] C-10: Include a full player experience loop: title, gameplay, end.
 - [X] B-1: The <code>README.md</code> file contains a personal reflection on the iteration and self-evaluation, as defined above.
 - [X] B-2: The playable game is published to GitHub Pages and linked from the <code>README.md</code> file.
 - [X] B-3: The source code and project structure comply with our adopted style guides.
 - [X] B-4: There is a sprite element in the level that the player can interact with, such as a collectible, an enemy, a book, or a switch.
 - [X] B-5: The camera follows the character through a world that is larger than one screen.
-- [X] A-1: Earn one star
+- [X] B-6: Include sound effects and music.
+- [X] B-7: Include a HUD that tracks game-appropriate data such as score or time remaining.
+- [X] B-8: Include a clear example of <em>juice</em> and describe it in the <code>README.md</code>.
+- [X] A-1: Include two clear examples of <em>juice</em> and describe them in the <code>README.md</code>.
+- [X] A-2: Earn two stars.
 - [X] ⭐ Animate the main character using either <code>AnimatedSprite</code> or cutout animation
 - [X] ⭐ Include parallax scrolling in the background.
 - [X] ⭐ Include tiles that can be passed in one direction, such as being able to jump up through a tile and land atop it.
